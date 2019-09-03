@@ -1,32 +1,64 @@
-<h1>Депозитний калькулятор</h1>
+<h1><a href="/">Депозитний калькулятор</a></h1>
 <hr>
 
 <% unless @params.empty? %>
   <%= @params %>
 <% end %>
 
-<%#= settings.currencies.to_s %>
-
 <form action="/" method="POST">
-  <div class="form-group">
-    <label for="currency">Валюта</label>
-    <select name="currency" class="form-control" id="exampleFormControlSelect1" required>
-      <% settings.currencies.each_with_index do |currency, index| %>
-        <option value="<%= currency[:code] %>"><%= currency[:title] %></option>
-      <% end %>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="deposit">Сума внеску</label>
-    <input name='deposit' type="number" class="form-control" id="deposit" placeholder="Сума внеску" value='1000' required>
-  </div>
-  <div class="form-group">
-    <label for="annual_rate">Річна ставка</label>
-    <input name='annual_rate' type="number" class="form-control" id="annual_rate" placeholder="Річна ставка" value='10'>
-  </div>
+
+  <p class='form-block-header'>Основні дані</p>
+  <div class="form-block">
     <div class="form-group">
-    <label for="date">Дата внеску</label>
-    <input name='date' type="date" class="form-control" id="date" value="<%= Date.today %>">
+      <label for="currency">Валюта</label>
+      <select name="currency" class="form-control" id="exampleFormControlSelect1" required>
+        <% settings.currencies.each do |currency| %>
+          <option value="<%= currency[:code] %>"><%= currency[:title] %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="deposit">Сума внеску</label>
+      <input name='deposit' type="number" class="form-control" id="deposit" placeholder="Сума внеску" value='1000.00' required step=0.01>
+    </div>
+
+    <div class="form-group">
+      <label for="annual_rate">Річна ставка</label>
+      <input name='annual_rate' type="number" class="form-control" id="annual_rate" placeholder="Річна ставка" value='10.00' required step=0.01>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Дата внеску</label>
+      <input name='date' type="date" class="form-control" id="date" value="<%= Date.today %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Строк внеску</label>
+      <select name='period_type' class="form-control" id="period_type" required>
+        <option value="years">років</option>
+        <option value="months">місяців</option>
+      </select>
+      <input name='period_value' type="number" class="form-control" id="period_value" value='1' required step=1>
+    </div>
   </div>
+
+  <p class='form-block-header'>Капіталізація</p>
+  <div class="form-block">
+    <div class="form-group">
+      <label for="capitalisation">Капіталізація</label>
+      <select name='capitalisation' class="form-control" id="capitalisation">
+        <% settings.time_ranges.each_with_index do |time_range| %>
+          <option value="<%= time_range[:code] %>"><%= time_range[:title] %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
   <button type="submit" class="btn btn-primary">Розрахувати</button>
 </form>
+
+<% if @data %>
+  <%= @data %>
+  <%#= erb :data_table, :locals => { :data => @data } %>
+<% end %>

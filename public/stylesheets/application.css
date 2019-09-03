@@ -1,0 +1,11 @@
+.form-block-header {
+  font-size: 1.2em;
+  color: grey;
+}
+
+.form-block {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
