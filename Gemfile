@@ -5,4 +5,9 @@ source 'https://rubygems.org' do
   group :development, :test do
     gem 'pry'
   end
+
+  group :test do
+    gem 'rack-test'
+    gem 'rspec'
+  end
 end
