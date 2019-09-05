@@ -1,10 +1,6 @@
 <h1><a href="/">Депозитний калькулятор</a></h1>
 <hr>
 
-<% unless @params.empty? %>
-  <%= @params %>
-<% end %>
-
 <form action="/" method="POST">
 
   <p class='form-block-header'>Основні дані</p>
@@ -57,8 +53,32 @@
 
   <button type="submit" class="btn btn-primary">Розрахувати</button>
 </form>
+<small>* При розрахунку процентної ставки передбачається, що у році 365 днів</small>
+<hr>
 
 <% if @data %>
-  <%= @data %>
-  <%#= erb :data_table, :locals => { :data => @data } %>
+  <%= erb :data_table, :locals => { data: @data, total_days: @total_days, total_income: @total_income } %>
 <% end %>
+
+<table class="table table-bordered" style="width: 50%;">
+  <thead>
+    <tr>
+      <th>Значення</th>
+      <th><%= settings.currencies.detect{ |cur| cur[:code] == @currency }[:title] %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Сума до повернення</td>
+      <td><%= @deposit %></td>
+    </tr>
+    <tr>
+      <td>Сума % по вкладу</td>
+      <td><%= (@total_income - @deposit).round(2) %></td>
+    </tr>
+    <tr>
+      <td>Разом</td>
+      <td><%= @total_income.round(2) %></td>
+    </tr>
+  </tbody>
+</table>

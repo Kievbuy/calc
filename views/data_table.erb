@@ -1,0 +1,32 @@
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>№</th>
+      <th>Дата</th>
+      <th>Днів</th>
+      <th>Сума тіла</th>
+      <th>Поповнення внеску</th>
+      <th>% по вкладу</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.each_with_index do |record, i| %>
+      <tr>
+        <td><%= record[0] %></td>
+        <td><%= record[1][:date] %></td>
+        <td><%= record[1][:days_number] %></td>
+        <td><%= record[1][:body].round(2) %></td>
+        <td><%= record[1][:capitalisation] %></td>
+        <td><%= record[1][:income].round(2) if record[1][:income] %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td>Усього</td>
+      <td><%= total_days %></td>
+      <td><%= data.values.last[:body].round(2) %></td>
+      <td></td>
+      <td><%= total_income.round(2) %></td>
+    </tr>
+  </tbody>
+</table>
